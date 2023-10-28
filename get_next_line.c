@@ -3,24 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dsylvain <dsylvain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 09:57:00 by dsylvain          #+#    #+#             */
-/*   Updated: 2023/10/27 18:27:28 by dan              ###   ########.fr       */
+/*   Updated: 2023/10/28 06:35:17 by dsylvain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	*ft_memset(void *s, int c, size_t n)
+char	*get_next_line(int fd)
 {
-	size_t			i;
+	static t_Data	*data = NULL;
+	char			*next_line;
+	char			*tmp;
 
-	i = 0;
-	while (i < n)
-		((unsigned char *)s)[i++] = (unsigned char)c;
-	return (s);
+	initialise_variables(&data);
+	while (!(ft_strchr(data->buff_nl, '\n')) && data->bytes_read)
+	{
+		data->bytes_read = read(fd, data->buffer, BUFFER_SIZE);
+		if (data->bytes_read == -1)
+			return (free_all(&data));
+		data->buffer[data->bytes_read] = '\0';
+		tmp = data->buff_nl;
+		data->buff_nl = ft_strjoin(data->buff_nl, data->buffer);
+		free(tmp);
+	}
+	tmp = ft_strchr(data->buff_nl, '\n');
+	next_line = build_next_line(&data, tmp, data->bytes_read);
+	if (next_line)
+		return (next_line);
+	free_all(&data);
+	return (NULL);
 }
+
 
 int	initialise_variables(t_Data **data)
 {
@@ -77,61 +93,48 @@ void	*free_all(t_Data **data)
 	return (NULL);
 }
 
-char	*get_next_line(int fd)
+void	*ft_memset(void *s, int c, size_t n)
 {
-	static t_Data	*data = NULL;
-	char			*next_line;
-	char			*tmp;
+	size_t			i;
 
-	initialise_variables(&data);
-	if (data->bytes_read == 0)
-		return (NULL);
-	while (!(ft_strchr(data->buff_nl, '\n')) && data->bytes_read)
-	{
-		data->bytes_read = read(fd, data->buffer, BUFFER_SIZE);
-		if (data->bytes_read == -1)
-			return (free_all(&data));
-		data->buffer[data->bytes_read] = '\0';
-		tmp = data->buff_nl;
-		data->buff_nl = ft_strjoin(data->buff_nl, data->buffer);
-		free(tmp);
-	}
-	tmp = ft_strchr(data->buff_nl, '\n');
-	next_line = build_next_line(&data, tmp, data->bytes_read);
-	if (next_line)
-		return (next_line);
-	free_all(&data);
-	return (NULL);
+	i = 0;
+	while (i < n)
+		((unsigned char *)s)[i++] = (unsigned char)c;
+	return (s);
 }
-// GERER RETOUR DE READ = -1
-// int main(void)
-// {
-// 	int	fd;
 
-// 	fd = open("text.txt", O_RDONLY);
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 		return(0);
-// }
+// GERER RETOUR DE READ = -1
+int main(void)
+{
+	int	fd;
+	char *str;
+
+	fd = open("text2.txt", O_RDONLY);
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	printf("%s", get_next_line(fd));
+	while (str = get_next_line(fd))
+		printf("%s", str);
+	return(0);
+}

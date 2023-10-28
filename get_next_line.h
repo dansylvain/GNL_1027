@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dsylvain <dsylvain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:58:59 by dsylvain          #+#    #+#             */
-/*   Updated: 2023/10/27 18:02:22 by dan              ###   ########.fr       */
+/*   Updated: 2023/10/28 06:22:51 by dsylvain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ typedef struct t_Data
 	int		bytes_read;
 }	t_Data;
 
+int	initialise_variables(t_Data **data);
+char	*build_next_line(t_Data **data, char *tmp, int bytes_read);
+void	*free_all(t_Data **data);
+void	*ft_memset(void *s, int c, size_t n);
 char	*get_next_line(int fd);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strdup(const char *s);
