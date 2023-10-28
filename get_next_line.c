@@ -6,7 +6,7 @@
 /*   By: dsylvain <dsylvain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 09:57:00 by dsylvain          #+#    #+#             */
-/*   Updated: 2023/10/28 06:35:17 by dsylvain         ###   ########.fr       */
+/*   Updated: 2023/10/28 08:25:14 by dsylvain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char	*get_next_line(int fd)
 		data->buff_nl = ft_strjoin(data->buff_nl, data->buffer);
 		free(tmp);
 	}
-	tmp = ft_strchr(data->buff_nl, '\n');
 	next_line = build_next_line(&data, tmp, data->bytes_read);
 	if (next_line)
 		return (next_line);
@@ -37,9 +36,10 @@ char	*get_next_line(int fd)
 	return (NULL);
 }
 
-
 int	initialise_variables(t_Data **data)
 {
+	size_t			i;
+
 	if (!*data)
 	{
 		*data = (t_Data *)malloc(sizeof(t_Data));
@@ -53,8 +53,10 @@ int	initialise_variables(t_Data **data)
 	}
 	if (!(*data)->buffer)
 	{
+		i = 0;
 		(*data)->buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
-		ft_memset((*data)->buffer, '\0', BUFFER_SIZE + 1);
+		while (i < BUFFER_SIZE + 1)
+			((*data)->buffer)[i++] = '\0';
 		(*data)->buff_nl[0] = '\0';
 	}
 	if (!*data || !(*data)->buff_nl)
@@ -67,6 +69,7 @@ char	*build_next_line(t_Data **data, char *tmp, int bytes_read)
 {
 	char	*next_line;
 
+	tmp = ft_strchr((*data)->buff_nl, '\n');
 	if (ft_strchr((*data)->buff_nl, '\n'))
 	{
 		next_line = ft_substr((*data)->buff_nl, 0, tmp - (*data)->buff_nl + 1);
@@ -93,48 +96,37 @@ void	*free_all(t_Data **data)
 	return (NULL);
 }
 
-void	*ft_memset(void *s, int c, size_t n)
-{
-	size_t			i;
-
-	i = 0;
-	while (i < n)
-		((unsigned char *)s)[i++] = (unsigned char)c;
-	return (s);
-}
-
 // GERER RETOUR DE READ = -1
-int main(void)
-{
-	int	fd;
-	char *str;
-
-	fd = open("text2.txt", O_RDONLY);
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	while (str = get_next_line(fd))
-		printf("%s", str);
-	return(0);
-}
+// int main(void)
+// {
+// 	int	fd;
+// 	char *str;
+// 	fd = open("text2.txt", O_RDONLY);
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	printf("%s", get_next_line(fd));
+// 	while (str = get_next_line(fd))
+// 		printf("%s", str);
+// 	return(0);
+// }
