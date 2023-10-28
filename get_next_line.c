@@ -6,7 +6,7 @@
 /*   By: dsylvain <dsylvain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 09:57:00 by dsylvain          #+#    #+#             */
-/*   Updated: 2023/10/28 08:25:14 by dsylvain         ###   ########.fr       */
+/*   Updated: 2023/10/28 08:38:04 by dsylvain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,19 @@ int	initialise_variables(t_Data **data)
 char	*build_next_line(t_Data **data, char *tmp, int bytes_read)
 {
 	char	*next_line;
+	size_t	i;
 
 	tmp = ft_strchr((*data)->buff_nl, '\n');
 	if (ft_strchr((*data)->buff_nl, '\n'))
 	{
 		next_line = ft_substr((*data)->buff_nl, 0, tmp - (*data)->buff_nl + 1);
-		ft_strlcpy((*data)->buff_nl, tmp + 1, ft_strlen(tmp));
+		i = 0;
+		while (i < ft_strlen(tmp) - 1 && (tmp + 1)[i] != '\0')
+		{
+			((*data)->buff_nl)[i] = (tmp + 1)[i];
+			i++;
+		}
+		((*data)->buff_nl)[i] = '\0';
 		return (next_line);
 	}
 	else if (bytes_read == 0 && *(*data)->buff_nl)
