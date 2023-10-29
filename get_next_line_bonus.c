@@ -6,7 +6,7 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 09:57:00 by dsylvain          #+#    #+#             */
-/*   Updated: 2023/10/29 11:52:13 by dan              ###   ########.fr       */
+/*   Updated: 2023/10/29 14:18:27 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,33 @@ t_Data	*get_data(t_Data **head, int fd)
 	*head = current;
 	return (current);
 }
+void	expand_buff_ln(t_Data **data)
+{
+	char	*tmp;
+	// size_t	i;
+	// size_t	j;
+
+	// is there not enough space to copy buffer + 1?
+		// realloc:
+		// keep address of buff_nl in tmp var
+		// assign new memory space (double the size) to buff_nl
+		// update bff_nl_size in structure
+		// free old memory space (tmp var)
+
+	// initialize i
+	// iterate through buff_nl[i]
+	// initialize j
+	// copy buffer[j] into buff_nl[i]
+	// as long as i < than buff_nl_size
+	// initialize bytes to '\0'
+
+
+
+	tmp = (*data)->buff_nl;
+	(*data)->buff_nl = ft_strjoin((*data)->buff_nl, (*data)->buffer);
+	free(tmp);
+}
+
 
 char	*get_next_line(int fd)
 {
@@ -50,9 +77,7 @@ char	*get_next_line(int fd)
 		if (data->bytes_read == -1)
 			return (delete_data(&head, fd));
 		data->buffer[data->bytes_read] = '\0';
-		tmp = data->buff_nl;
-		data->buff_nl = ft_strjoin(data->buff_nl, data->buffer);
-		free(tmp);
+		expand_buff_ln(&data);
 	}
 	tmp = ft_strchr(data->buff_nl, '\n');
 	next_line = build_next_line(&data, tmp, data->bytes_read);
@@ -97,7 +122,8 @@ int	initialise_variables(t_Data **data)
 
 	if (!(*data)->buff_nl)
 	{
-		(*data)->buff_nl = (char *)malloc(1);
+		(*data)->buff_nl = (char *)malloc((BUFFER_SIZE * 5) * sizeof(char));
+		(*data)->buff_nl_size = BUFFER_SIZE * 5;
 		(*data)->buff_nl[0] = '\0';
 	}
 	if (!(*data)->buffer)
