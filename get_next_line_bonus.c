@@ -6,18 +6,46 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 09:57:00 by dsylvain          #+#    #+#             */
-/*   Updated: 2023/10/29 09:40:34 by dan              ###   ########.fr       */
+/*   Updated: 2023/10/29 09:36:55 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+t_Data	*get_data(t_Data **head, int fd)
+{
+	t_Data	*current;
+
+	current = *head;
+	while (current)
+	{
+		if (current->fd == fd)
+			return(current);
+		current = current->next;
+	}
+	if (current == NULL)
+	{
+		current = (t_Data *)malloc(sizeof(t_Data));
+		if (!current)
+			return (NULL);
+		current->buff_nl = NULL;
+		current->buffer = NULL;
+		current->fd = fd;
+		current->next = *head;
+		*head = current;
+		return (current);
+	}
+	return(current);
+}
+
 char	*get_next_line(int fd)
 {
-	static t_Data	*data = NULL;
+	static t_Data	*head = NULL;
+	t_Data			*data;
 	char			*next_line;
 	char			*tmp;
 
+	data = get_data(&head, fd);
 	initialise_variables(&data);
 	while (!(ft_strchr(data->buff_nl, '\n')) && data->bytes_read)
 	{
@@ -43,8 +71,7 @@ int	initialise_variables(t_Data **data)
 	if (!*data)
 	{
 		*data = (t_Data *)malloc(sizeof(t_Data));
-		(*data)->buff_nl = NULL;
-		(*data)->buffer = NULL;
+		
 	}
 	if (!(*data)->buff_nl)
 	{
@@ -103,35 +130,33 @@ void	*free_all(t_Data **data)
 	return (NULL);
 }
 
-// GERER RETOUR DE READ = -1
 // int main(void)
 // {
-// 	int	fd;
-// 	fd = open("text2.txt", O_RDONLY);
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
+// 	int	fd1;
+// 	int	fd2;
+// 	// char *str;
+// 	fd1 = open("text.txt", O_RDONLY);
+// 	fd2 = open("text2.txt", O_RDONLY);
 	
+// 	printf("%s", get_next_line(fd1));
+// 	printf("%s", get_next_line(fd2));
+// 	printf("%s", get_next_line(fd1));
+// 	printf("%s", get_next_line(fd2));
+// 	printf("%s", get_next_line(fd1));
+// 	printf("%s", get_next_line(fd2));
+// 	printf("%s", get_next_line(fd1));
+// 	printf("%s", get_next_line(fd2));
+// 	printf("%s", get_next_line(fd1));
+// 	printf("%s", get_next_line(fd2));
+// 	printf("%s", get_next_line(fd1));
+// 	printf("%s", get_next_line(fd2));
+// 	printf("%s", get_next_line(fd1));
+// 	printf("%s", get_next_line(fd2));
+// 	printf("%s", get_next_line(fd1));
+// 	printf("%s", get_next_line(fd2));
+// 	printf("%s", get_next_line(fd1));
+// 	printf("%s", get_next_line(fd2));
+// 	// while (str = get_next_line(fd))
+// 	// 	printf("%s", str);
 // 	return(0);
 // }
