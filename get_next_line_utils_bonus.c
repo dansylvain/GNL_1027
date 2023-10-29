@@ -6,11 +6,40 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 10:00:32 by dan               #+#    #+#             */
-/*   Updated: 2023/10/29 11:22:17 by dan              ###   ########.fr       */
+/*   Updated: 2023/10/29 15:44:08 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+
+void	expand_buff_ln(t_Data **data)
+{
+	char	*tmp;
+	size_t	i;
+	size_t	j;
+
+	tmp = NULL;
+	i = 0;
+	if (((*data)->buff_nl_size - ft_strlen((*data)->buff_nl) < BUFFER_SIZE + 1))
+	{
+		tmp = (*data)->buff_nl;
+		(*data)->buff_nl = (char *)malloc((*data)->buff_nl_size * 2);
+		(*data)->buff_nl_size *= 2;
+		while (tmp[i])
+		{
+			(*data)->buff_nl[i] = tmp[i];
+			i++;
+		}
+		free(tmp);
+	}
+	if (!i)
+		i = ft_strlen((*data)->buff_nl);
+	j = 0;
+	while (j < ft_strlen((*data)->buffer))
+		(*data)->buff_nl[i++] = (*data)->buffer[j++];
+	while (i < (size_t)(*data)->buff_nl_size)
+		(*data)->buff_nl[i++] = '\0';
+}
 
 void	delete_node(t_Data *node_to_delete)
 {
@@ -57,30 +86,6 @@ char	*ft_strchr(const char *s, int c)
 	if ((char)c == '\0')
 		return ((char *)(s));
 	return (NULL);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*res;
-	size_t	i;
-
-	res = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (res == NULL)
-		return (NULL);
-	i = 0;
-	while (i < ft_strlen(s1))
-	{
-		res[i] = s1[i];
-		i++;
-	}
-	i = 0;
-	while (i < ft_strlen(s2))
-	{
-		res[i + ft_strlen(s1)] = s2[i];
-		i++;
-	}
-	res[i + ft_strlen(s1)] = '\0';
-	return (res);
 }
 
 size_t	ft_strlen(const char *s)
