@@ -6,7 +6,7 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 09:57:00 by dsylvain          #+#    #+#             */
-/*   Updated: 2023/10/29 11:16:18 by dan              ###   ########.fr       */
+/*   Updated: 2023/10/29 11:22:42 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,7 @@ void	*delete_data(t_Data **head, int fd)
 			current = current->next;
 		}
 	}
-	if (node_to_delete)
-	{
-		free(node_to_delete->buff_nl);
-		free(node_to_delete->buffer);
-		node_to_delete->buff_nl = NULL;
-		node_to_delete->buffer = NULL;
-		free(node_to_delete);
-		node_to_delete = NULL;
-	}
+	delete_node(node_to_delete);
 	return (NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:58:59 by dsylvain          #+#    #+#             */
-/*   Updated: 2023/10/29 11:17:00 by dan              ###   ########.fr       */
+/*   Updated: 2023/10/29 11:22:26 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct t_Data
 	struct t_Data	*next;
 }	t_Data;
 
+void	delete_node(t_Data *node_to_delete);
 int		initialise_variables(t_Data **data);
 char	*build_next_line(t_Data **data, char *tmp, int bytes_read);
 void	*delete_data(t_Data **data, int fd);

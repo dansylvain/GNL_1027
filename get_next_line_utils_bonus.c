@@ -6,11 +6,24 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 10:00:32 by dan               #+#    #+#             */
-/*   Updated: 2023/10/29 09:43:19 by dan              ###   ########.fr       */
+/*   Updated: 2023/10/29 11:22:17 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
+
+void	delete_node(t_Data *node_to_delete)
+{
+	if (node_to_delete)
+	{
+		free(node_to_delete->buff_nl);
+		free(node_to_delete->buffer);
+		node_to_delete->buff_nl = NULL;
+		node_to_delete->buffer = NULL;
+		free(node_to_delete);
+		node_to_delete = NULL;
+	}
+}
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
