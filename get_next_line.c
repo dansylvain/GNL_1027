@@ -6,7 +6,7 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 09:57:00 by dsylvain          #+#    #+#             */
-/*   Updated: 2023/10/29 10:08:10 by dan              ###   ########.fr       */
+/*   Updated: 2023/10/29 11:14:19 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ char	*get_next_line(int fd)
 	char			*next_line;
 	char			*tmp;
 
-	initialise_variables(&data);
+	if (!initialise_variables(&data))
+		return (NULL);
 	while (!(ft_strchr(data->buff_nl, '\n')) && data->bytes_read)
 	{
 		data->bytes_read = read(fd, data->buffer, BUFFER_SIZE);
@@ -59,7 +60,7 @@ int	initialise_variables(t_Data **data)
 			((*data)->buffer)[i++] = '\0';
 		(*data)->buff_nl[0] = '\0';
 	}
-	if (!*data || !(*data)->buff_nl)
+	if (!*data || !(*data)->buff_nl || !(*data)->buffer)
 		return (0);
 	(*data)->bytes_read = 1;
 	return (1);
@@ -71,7 +72,7 @@ char	*build_next_line(t_Data **data, char *tmp, int bytes_read)
 	size_t	i;
 
 	tmp = ft_strchr((*data)->buff_nl, '\n');
-	if (ft_strchr((*data)->buff_nl, '\n'))
+	if (tmp)
 	{
 		next_line = ft_substr((*data)->buff_nl, 0, tmp - (*data)->buff_nl + 1);
 		i = 0;
@@ -132,6 +133,5 @@ void	*delete_data(t_Data **data)
 // 	printf("%s", get_next_line(fd));
 // 	printf("%s", get_next_line(fd));
 // 	printf("%s", get_next_line(fd));
-	
 // 	return(0);
 // }
