@@ -6,7 +6,7 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 09:57:00 by dsylvain          #+#    #+#             */
-/*   Updated: 2023/10/29 10:57:26 by dan              ###   ########.fr       */
+/*   Updated: 2023/10/29 11:16:18 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_Data	*get_data(t_Data **head, int fd)
 	while (current)
 	{
 		if (current->fd == fd)
-			return(current);
+			return (current);
 		current = current->next;
 	}
 	if (current == NULL)
@@ -35,7 +35,7 @@ t_Data	*get_data(t_Data **head, int fd)
 		*head = current;
 		return (current);
 	}
-	return(current);
+	return (current);
 }
 
 char	*get_next_line(int fd)
@@ -46,8 +46,8 @@ char	*get_next_line(int fd)
 	char			*tmp;
 
 	data = get_data(&head, fd);
-	if(!initialise_variables(&data))
-		return(NULL);
+	if (!initialise_variables(&data))
+		return (NULL);
 	while (!(ft_strchr(data->buff_nl, '\n')) && data->bytes_read)
 	{
 		data->bytes_read = read(fd, data->buffer, BUFFER_SIZE);
@@ -85,7 +85,7 @@ void	*delete_data(t_Data **head, int fd)
 			{
 				node_to_delete = current->next;
 				current->next = current->next->next;
-				break;
+				break ;
 			}
 			current = current->next;
 		}
@@ -106,11 +106,6 @@ int	initialise_variables(t_Data **data)
 {
 	size_t			i;
 
-	if (!*data)
-	{
-		*data = (t_Data *)malloc(sizeof(t_Data));
-		
-	}
 	if (!(*data)->buff_nl)
 	{
 		(*data)->buff_nl = (char *)malloc(1);
@@ -123,7 +118,7 @@ int	initialise_variables(t_Data **data)
 		while (i < BUFFER_SIZE + 1)
 			((*data)->buffer)[i++] = '\0';
 	}
-	if (!*data || !(*data)->buff_nl)
+	if (!*data || !(*data)->buff_nl || !(*data)->buffer)
 		return (0);
 	(*data)->bytes_read = 1;
 	return (1);
@@ -135,7 +130,7 @@ char	*build_next_line(t_Data **data, char *tmp, int bytes_read)
 	size_t	i;
 
 	tmp = ft_strchr((*data)->buff_nl, '\n');
-	if (ft_strchr((*data)->buff_nl, '\n'))
+	if (tmp)
 	{
 		next_line = ft_substr((*data)->buff_nl, 0, tmp - (*data)->buff_nl + 1);
 		i = 0;
@@ -156,8 +151,6 @@ char	*build_next_line(t_Data **data, char *tmp, int bytes_read)
 	return (NULL);
 }
 
-
-
 // int main(void)
 // {
 // 	int	fd1;
@@ -165,7 +158,6 @@ char	*build_next_line(t_Data **data, char *tmp, int bytes_read)
 // 	// char *str;
 // 	fd1 = open("text.txt", O_RDONLY);
 // 	fd2 = open("text2.txt", O_RDONLY);
-	
 // 	printf("%s", get_next_line(fd1));
 // 	printf("%s", get_next_line(fd2));
 // 	printf("%s", get_next_line(fd1));
