@@ -6,7 +6,7 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 09:57:00 by dsylvain          #+#    #+#             */
-/*   Updated: 2023/10/29 09:40:34 by dan              ###   ########.fr       */
+/*   Updated: 2023/10/29 10:08:10 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*get_next_line(int fd)
 	{
 		data->bytes_read = read(fd, data->buffer, BUFFER_SIZE);
 		if (data->bytes_read == -1)
-			return (free_all(&data));
+			return (delete_data(&data));
 		data->buffer[data->bytes_read] = '\0';
 		tmp = data->buff_nl;
 		data->buff_nl = ft_strjoin(data->buff_nl, data->buffer);
@@ -32,7 +32,7 @@ char	*get_next_line(int fd)
 	next_line = build_next_line(&data, tmp, data->bytes_read);
 	if (next_line)
 		return (next_line);
-	free_all(&data);
+	delete_data(&data);
 	return (NULL);
 }
 
@@ -92,7 +92,7 @@ char	*build_next_line(t_Data **data, char *tmp, int bytes_read)
 	return (NULL);
 }
 
-void	*free_all(t_Data **data)
+void	*delete_data(t_Data **data)
 {
 	free((*data)->buff_nl);
 	free((*data)->buffer);

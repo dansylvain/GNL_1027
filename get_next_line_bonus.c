@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 09:57:00 by dsylvain          #+#    #+#             */
-/*   Updated: 2023/10/29 09:36:55 by dan              ###   ########.fr       */
+/*   Updated: 2023/10/29 10:57:26 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 t_Data	*get_data(t_Data **head, int fd)
 {
@@ -46,12 +46,13 @@ char	*get_next_line(int fd)
 	char			*tmp;
 
 	data = get_data(&head, fd);
-	initialise_variables(&data);
+	if(!initialise_variables(&data))
+		return(NULL);
 	while (!(ft_strchr(data->buff_nl, '\n')) && data->bytes_read)
 	{
 		data->bytes_read = read(fd, data->buffer, BUFFER_SIZE);
 		if (data->bytes_read == -1)
-			return (free_all(&data));
+			return (delete_data(&head, fd));
 		data->buffer[data->bytes_read] = '\0';
 		tmp = data->buff_nl;
 		data->buff_nl = ft_strjoin(data->buff_nl, data->buffer);
@@ -60,7 +61,44 @@ char	*get_next_line(int fd)
 	next_line = build_next_line(&data, tmp, data->bytes_read);
 	if (next_line)
 		return (next_line);
-	free_all(&data);
+	delete_data(&head, fd);
+	return (NULL);
+}
+
+void	*delete_data(t_Data **head, int fd)
+{
+	t_Data	*current;
+	t_Data	*node_to_delete;
+
+	node_to_delete = NULL;
+	current = *head;
+	if (current->fd == fd)
+	{
+		*head = current->next;
+		node_to_delete = current;
+	}
+	else
+	{
+		while (current->next)
+		{
+			if (current->next->fd == fd)
+			{
+				node_to_delete = current->next;
+				current->next = current->next->next;
+				break;
+			}
+			current = current->next;
+		}
+	}
+	if (node_to_delete)
+	{
+		free(node_to_delete->buff_nl);
+		free(node_to_delete->buffer);
+		node_to_delete->buff_nl = NULL;
+		node_to_delete->buffer = NULL;
+		free(node_to_delete);
+		node_to_delete = NULL;
+	}
 	return (NULL);
 }
 
@@ -84,7 +122,6 @@ int	initialise_variables(t_Data **data)
 		(*data)->buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 		while (i < BUFFER_SIZE + 1)
 			((*data)->buffer)[i++] = '\0';
-		(*data)->buff_nl[0] = '\0';
 	}
 	if (!*data || !(*data)->buff_nl)
 		return (0);
@@ -119,16 +156,7 @@ char	*build_next_line(t_Data **data, char *tmp, int bytes_read)
 	return (NULL);
 }
 
-void	*free_all(t_Data **data)
-{
-	free((*data)->buff_nl);
-	free((*data)->buffer);
-	(*data)->buff_nl = NULL;
-	(*data)->buffer = NULL;
-	free(*data);
-	*data = NULL;
-	return (NULL);
-}
+
 
 // int main(void)
 // {
