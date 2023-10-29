@@ -6,7 +6,7 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 09:57:00 by dsylvain          #+#    #+#             */
-/*   Updated: 2023/10/29 15:08:15 by dan              ###   ########.fr       */
+/*   Updated: 2023/10/29 15:19:58 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,44 +33,6 @@ t_Data	*get_data(t_Data **head, int fd)
 	*head = current;
 	return (current);
 }
-void	expand_buff_ln(t_Data **data)
-{
-	char	*tmp;
-	size_t	i;
-	size_t	j;
-	
-	tmp = NULL;
-
-	i = 0;
-	if (((*data)->buff_nl_size - ft_strlen((*data)->buff_nl) < BUFFER_SIZE + 1))
-	{
-		// printf("%i - %li < %i NOT ENOUGH SPACE!!!", (*data)->buff_nl_size, ft_strlen((*data)->buff_nl), BUFFER_SIZE + 1);
-		tmp = (*data)->buff_nl;
-		(*data)->buff_nl = (char *)malloc((*data)->buff_nl_size * 2 * sizeof(char));
-		(*data)->buff_nl_size = (*data)->buff_nl_size * 2;
-		while(tmp[i])
-		{
-			(*data)->buff_nl[i] = tmp[i];
-			i++;
-		}
-		free(tmp);
-	}
-	if (!i)
-		i = ft_strlen((*data)->buff_nl);
-	j = 0;
-	while (j < ft_strlen((*data)->buffer))
-	{
-		(*data)->buff_nl[i] = (*data)->buffer[j];
-		i++;
-		j++;
-	}
-	while (i < (size_t)(*data)->buff_nl_size)
-	{
-		(*data)->buff_nl[i] = '\0';
-		i++;
-	}
-}
-
 
 char	*get_next_line(int fd)
 {
@@ -136,7 +98,7 @@ int	initialise_variables(t_Data **data)
 		(*data)->buff_nl = (char *)malloc((BUFFER_SIZE * 5) * sizeof(char));
 		(*data)->buff_nl_size = BUFFER_SIZE * 5;
 		i = 0;
-		while(i < BUFFER_SIZE * 5)
+		while (i < BUFFER_SIZE * 5)
 			(*data)->buff_nl[i++] = '\0';
 	}
 	if (!(*data)->buffer)
