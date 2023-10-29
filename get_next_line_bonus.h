@@ -6,7 +6,7 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:58:59 by dsylvain          #+#    #+#             */
-/*   Updated: 2023/10/29 11:52:20 by dan              ###   ########.fr       */
+/*   Updated: 2023/10/29 14:04:35 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct t_Data
 	char			*buff_nl;
 	char			*buffer;
 	int				bytes_read;
+	int				buff_nl_size;
 	int				fd;
 	struct t_Data	*next;
 }	t_Data;
