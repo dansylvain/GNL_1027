@@ -6,7 +6,7 @@
 /*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 09:57:00 by dsylvain          #+#    #+#             */
-/*   Updated: 2023/10/29 11:22:42 by dan              ###   ########.fr       */
+/*   Updated: 2023/10/29 11:52:13 by dan              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,14 @@ t_Data	*get_data(t_Data **head, int fd)
 			return (current);
 		current = current->next;
 	}
-	if (current == NULL)
-	{
-		current = (t_Data *)malloc(sizeof(t_Data));
-		if (!current)
-			return (NULL);
-		current->buff_nl = NULL;
-		current->buffer = NULL;
-		current->fd = fd;
-		current->next = *head;
-		*head = current;
-		return (current);
-	}
+	current = (t_Data *)malloc(sizeof(t_Data));
+	if (!current)
+		return (NULL);
+	current->buff_nl = NULL;
+	current->buffer = NULL;
+	current->fd = fd;
+	current->next = *head;
+	*head = current;
 	return (current);
 }
 
@@ -58,6 +54,7 @@ char	*get_next_line(int fd)
 		data->buff_nl = ft_strjoin(data->buff_nl, data->buffer);
 		free(tmp);
 	}
+	tmp = ft_strchr(data->buff_nl, '\n');
 	next_line = build_next_line(&data, tmp, data->bytes_read);
 	if (next_line)
 		return (next_line);
@@ -121,7 +118,6 @@ char	*build_next_line(t_Data **data, char *tmp, int bytes_read)
 	char	*next_line;
 	size_t	i;
 
-	tmp = ft_strchr((*data)->buff_nl, '\n');
 	if (tmp)
 	{
 		next_line = ft_substr((*data)->buff_nl, 0, tmp - (*data)->buff_nl + 1);
