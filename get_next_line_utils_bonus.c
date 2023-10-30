@@ -6,13 +6,13 @@
 /*   By: dsylvain <dsylvain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 10:00:32 by dan               #+#    #+#             */
-/*   Updated: 2023/10/30 06:47:23 by dsylvain         ###   ########.fr       */
+/*   Updated: 2023/10/30 07:02:16 by dsylvain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-void	expand_buff_nl(t_Data **data)
+void	*expand_buff_nl(t_Data **data)
 {
 	char	*tmp;
 	size_t	i;
@@ -24,6 +24,8 @@ void	expand_buff_nl(t_Data **data)
 	{
 		tmp = (*data)->buff_nl;
 		(*data)->buff_nl = (char *)malloc((*data)->buff_nl_size * 2);
+		if (!(*data)->buff_nl)
+			return (delete_node(*data));
 		(*data)->buff_nl_size *= 2;
 		while (*tmp)
 			(*data)->buff_nl[i++] = *tmp++;
@@ -36,9 +38,10 @@ void	expand_buff_nl(t_Data **data)
 		(*data)->buff_nl[i++] = (*data)->buffer[j++];
 	while (i < (size_t)(*data)->buff_nl_size)
 		(*data)->buff_nl[i++] = '\0';
+	return ((*data)->buff_nl);
 }
 
-void	delete_node(t_Data *node_to_delete)
+void	*delete_node(t_Data *node_to_delete)
 {
 	if (node_to_delete)
 	{
@@ -49,6 +52,7 @@ void	delete_node(t_Data *node_to_delete)
 		free(node_to_delete);
 		node_to_delete = NULL;
 	}
+	return (NULL);
 }
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
