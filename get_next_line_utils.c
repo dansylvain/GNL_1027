@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dsylvain <dsylvain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 10:00:32 by dan               #+#    #+#             */
-/*   Updated: 2023/10/29 09:00:28 by dan              ###   ########.fr       */
+/*   Updated: 2023/10/30 09:05:43 by dsylvain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void	*delete_data(t_Data **data)
+{
+	free((*data)->buff_nl);
+	free((*data)->buffer);
+	(*data)->buff_nl = NULL;
+	(*data)->buffer = NULL;
+	free(*data);
+	*data = NULL;
+	return (NULL);
+}
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
@@ -44,30 +55,6 @@ char	*ft_strchr(const char *s, int c)
 	if ((char)c == '\0')
 		return ((char *)(s));
 	return (NULL);
-}
-
-char	*ft_strjoin(char const *s1, char const *s2)
-{
-	char	*res;
-	size_t	i;
-
-	res = (char *)malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (res == NULL)
-		return (NULL);
-	i = 0;
-	while (i < ft_strlen(s1))
-	{
-		res[i] = s1[i];
-		i++;
-	}
-	i = 0;
-	while (i < ft_strlen(s2))
-	{
-		res[i + ft_strlen(s1)] = s2[i];
-		i++;
-	}
-	res[i + ft_strlen(s1)] = '\0';
-	return (res);
 }
 
 size_t	ft_strlen(const char *s)
