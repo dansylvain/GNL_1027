@@ -6,7 +6,7 @@
 /*   By: dsylvain <dsylvain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 09:57:00 by dsylvain          #+#    #+#             */
-/*   Updated: 2023/10/30 07:25:30 by dsylvain         ###   ########.fr       */
+/*   Updated: 2023/10/30 08:08:46 by dsylvain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,32 +147,31 @@ char	*build_next_line(t_Data **data, char *tmp, int bytes_read)
 	return (NULL);
 }
 
+// #include <unistd.h>
 // int main(void)
 // {
 // 	int	fd1;
 // 	int	fd2;
-// 	// char *str;
-// 	fd1 = open("text.txt", O_RDONLY);
-// 	fd2 = open("text2.txt", O_RDONLY);
-// 	printf("%s", get_next_line(fd1));
-// 	printf("%s", get_next_line(fd2));
-// 	printf("%s", get_next_line(fd1));
-// 	printf("%s", get_next_line(fd2));
-// 	printf("%s", get_next_line(fd1));
-// 	printf("%s", get_next_line(fd2));
-// 	printf("%s", get_next_line(fd1));
-// 	printf("%s", get_next_line(fd2));
-// 	printf("%s", get_next_line(fd1));
-// 	printf("%s", get_next_line(fd2));
-// 	printf("%s", get_next_line(fd1));
-// 	printf("%s", get_next_line(fd2));
-// 	printf("%s", get_next_line(fd1));
-// 	printf("%s", get_next_line(fd2));
-// 	printf("%s", get_next_line(fd1));
-// 	printf("%s", get_next_line(fd2));
-// 	printf("%s", get_next_line(fd1));
-// 	printf("%s", get_next_line(fd2));
-// 	// while (str = get_next_line(fd))
-// 	// 	printf("%s", str);
+// 	char *str1;
+// 	char *str2;
+// 	str1 = "";
+// 	str2 = "";
+// 	fd1 = open("text2.txt", O_RDONLY);
+// 	fd2 = open("text.txt", O_RDONLY);
+// 	while(str1 || str2)
+// 	{
+// 		str1 = get_next_line(fd1);
+// 		if (str1)
+// 		{
+// 			write(1, "fd1: ", 5);
+// 			write(1, &*str1, ft_strlen(str1));
+// 		}
+// 		str2 = get_next_line(fd2);
+// 		if (str2)
+// 		{
+// 			write(1, "fd2: ", 5);
+// 			write(1, &*str2, ft_strlen(str2));
+// 		}
+// 	}
 // 	return(0);
 // }

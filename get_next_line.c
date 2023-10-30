@@ -6,7 +6,7 @@
 /*   By: dsylvain <dsylvain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 09:57:00 by dsylvain          #+#    #+#             */
-/*   Updated: 2023/10/30 07:41:12 by dsylvain         ###   ########.fr       */
+/*   Updated: 2023/10/30 08:08:32 by dsylvain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,12 +105,12 @@ void	delete_data(t_Data **data)
 	free(*data);
 	*data = NULL;
 }
+
 // #include <unistd.h>
 // int main(void)
 // {
 // 	int	fd;
 // 	char *str;
-	
 // 	str = "";
 // 	fd = open("text2.txt", O_RDONLY);
 // 	while(str)
