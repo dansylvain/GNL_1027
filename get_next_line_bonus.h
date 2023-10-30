@@ -6,7 +6,7 @@
 /*   By: dsylvain <dsylvain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:58:59 by dsylvain          #+#    #+#             */
-/*   Updated: 2023/10/30 06:47:41 by dsylvain         ###   ########.fr       */
+/*   Updated: 2023/10/30 07:00:54 by dsylvain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ typedef struct t_Data
 	struct t_Data	*next;
 }	t_Data;
 
-void	expand_buff_nl(t_Data **data);
-void	delete_node(t_Data *node_to_delete);
+void	*expand_buff_nl(t_Data **data);
+void	*delete_node(t_Data *node_to_delete);
 int		initialise_variables(t_Data **data);
 char	*build_next_line(t_Data **data, char *tmp, int bytes_read);
 void	*delete_data(t_Data **data, int fd);

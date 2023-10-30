@@ -6,7 +6,7 @@
 /*   By: dsylvain <dsylvain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 09:57:00 by dsylvain          #+#    #+#             */
-/*   Updated: 2023/10/30 06:47:34 by dsylvain         ###   ########.fr       */
+/*   Updated: 2023/10/30 07:03:50 by dsylvain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_Data	*get_data(t_Data **head, int fd)
 	}
 	current = (t_Data *)malloc(sizeof(t_Data));
 	if (!current)
-		return (NULL);
+		return (delete_node(current));
 	current->buff_nl = NULL;
 	current->buffer = NULL;
 	current->fd = fd;
@@ -43,14 +43,16 @@ char	*get_next_line(int fd)
 
 	data = get_data(&head, fd);
 	if (!initialise_variables(&data))
-		return (NULL);
+		return (delete_data(&data, fd));
 	while (!(ft_strchr(data->buff_nl, '\n')) && data->bytes_read)
 	{
 		data->bytes_read = read(fd, data->buffer, BUFFER_SIZE);
 		if (data->bytes_read == -1)
 			return (delete_data(&head, fd));
 		data->buffer[data->bytes_read] = '\0';
-		expand_buff_nl(&data);
+		data->buff_nl = expand_buff_nl(&data);
+		if (!data->buff_nl)
+			return (delete_data(&data, fd));
 	}
 	tmp = ft_strchr(data->buff_nl, '\n');
 	next_line = build_next_line(&data, tmp, data->bytes_read);
@@ -109,7 +111,10 @@ int	initialise_variables(t_Data **data)
 			((*data)->buffer)[i++] = '\0';
 	}
 	if (!*data || !(*data)->buff_nl || !(*data)->buffer)
+	{
+		delete_node(*data);
 		return (0);
+	}
 	(*data)->bytes_read = 1;
 	return (1);
 }
