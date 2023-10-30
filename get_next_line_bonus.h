@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dsylvain <dsylvain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:58:59 by dsylvain          #+#    #+#             */
-/*   Updated: 2023/10/29 15:19:06 by dan              ###   ########.fr       */
+/*   Updated: 2023/10/30 06:47:41 by dsylvain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct t_Data
 	struct t_Data	*next;
 }	t_Data;
 
-void	expand_buff_ln(t_Data **data);
+void	expand_buff_nl(t_Data **data);
 void	delete_node(t_Data *node_to_delete);
 int		initialise_variables(t_Data **data);
 char	*build_next_line(t_Data **data, char *tmp, int bytes_read);

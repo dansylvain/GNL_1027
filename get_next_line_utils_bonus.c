@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dsylvain <dsylvain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 10:00:32 by dan               #+#    #+#             */
-/*   Updated: 2023/10/29 15:44:08 by dan              ###   ########.fr       */
+/*   Updated: 2023/10/30 06:47:23 by dsylvain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-void	expand_buff_ln(t_Data **data)
+void	expand_buff_nl(t_Data **data)
 {
 	char	*tmp;
 	size_t	i;
@@ -25,14 +25,11 @@ void	expand_buff_ln(t_Data **data)
 		tmp = (*data)->buff_nl;
 		(*data)->buff_nl = (char *)malloc((*data)->buff_nl_size * 2);
 		(*data)->buff_nl_size *= 2;
-		while (tmp[i])
-		{
-			(*data)->buff_nl[i] = tmp[i];
-			i++;
-		}
-		free(tmp);
+		while (*tmp)
+			(*data)->buff_nl[i++] = *tmp++;
+		free(tmp - i);
 	}
-	if (!i)
+	if (i == 0)
 		i = ft_strlen((*data)->buff_nl);
 	j = 0;
 	while (j < ft_strlen((*data)->buffer))

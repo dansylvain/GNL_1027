@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dsylvain <dsylvain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 09:57:00 by dsylvain          #+#    #+#             */
-/*   Updated: 2023/10/29 15:19:58 by dan              ###   ########.fr       */
+/*   Updated: 2023/10/30 06:47:34 by dsylvain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*get_next_line(int fd)
 		if (data->bytes_read == -1)
 			return (delete_data(&head, fd));
 		data->buffer[data->bytes_read] = '\0';
-		expand_buff_ln(&data);
+		expand_buff_nl(&data);
 	}
 	tmp = ft_strchr(data->buff_nl, '\n');
 	next_line = build_next_line(&data, tmp, data->bytes_read);
