@@ -6,7 +6,7 @@
 /*   By: dsylvain <dsylvain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 09:57:00 by dsylvain          #+#    #+#             */
-/*   Updated: 2023/10/30 07:03:50 by dsylvain         ###   ########.fr       */
+/*   Updated: 2023/10/30 07:17:27 by dsylvain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*get_next_line(int fd)
 	char			*tmp;
 
 	data = get_data(&head, fd);
-	if (!initialise_variables(&data))
+	if (!initialise_variables(&data) || !data)
 		return (delete_data(&data, fd));
 	while (!(ft_strchr(data->buff_nl, '\n')) && data->bytes_read)
 	{
@@ -127,6 +127,8 @@ char	*build_next_line(t_Data **data, char *tmp, int bytes_read)
 	if (tmp)
 	{
 		next_line = ft_substr((*data)->buff_nl, 0, tmp - (*data)->buff_nl + 1);
+		if (!(*data)->buff_nl)
+			return (delete_node(*data));
 		i = 0;
 		while (i < ft_strlen(tmp) - 1 && (tmp + 1)[i] != '\0')
 		{
