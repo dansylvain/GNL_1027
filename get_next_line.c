@@ -3,17 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dan <dan@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: dsylvain <dsylvain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 09:57:00 by dsylvain          #+#    #+#             */
-/*   Updated: 2023/10/29 11:50:40 by dan              ###   ########.fr       */
+/*   Updated: 2023/10/30 07:41:12 by dsylvain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-/* Tu pourrais ajouter des vérifications pour les cas 
-où BUFFER_SIZE est <= 0 ou si fd est invalide. */
 
 char	*get_next_line(int fd)
 {
@@ -108,35 +105,27 @@ void	delete_data(t_Data **data)
 	free(*data);
 	*data = NULL;
 }
-
-// GERER RETOUR DE READ = -1
+// #include <unistd.h>
 // int main(void)
 // {
 // 	int	fd;
+// 	char *str;
+	
+// 	str = "";
 // 	fd = open("text2.txt", O_RDONLY);
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
-// 	printf("%s", get_next_line(fd));
+// 	while(str)
+// 	{
+// 		str = get_next_line(fd);
+// 		if (str)
+// 			write(1, &*str, ft_strlen(str));
+// 	}
+// 	fd = open("text.txt", O_RDONLY);
+// 	str = "";
+// 	while(str)
+// 	{
+// 		str = get_next_line(fd);
+// 		if (str)
+// 			write(1, &*str, ft_strlen(str));
+// 	}
 // 	return(0);
 // }
