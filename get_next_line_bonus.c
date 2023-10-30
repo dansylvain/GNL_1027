@@ -6,7 +6,7 @@
 /*   By: dsylvain <dsylvain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/25 09:57:00 by dsylvain          #+#    #+#             */
-/*   Updated: 2023/10/30 08:08:46 by dsylvain         ###   ########.fr       */
+/*   Updated: 2023/10/30 09:53:15 by dsylvain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,12 +152,16 @@ char	*build_next_line(t_Data **data, char *tmp, int bytes_read)
 // {
 // 	int	fd1;
 // 	int	fd2;
+// 	int	fd3;
 // 	char *str1;
 // 	char *str2;
+// 	char *str3;
 // 	str1 = "";
 // 	str2 = "";
-// 	fd1 = open("text2.txt", O_RDONLY);
-// 	fd2 = open("text.txt", O_RDONLY);
+// 	str3 = "";
+// 	fd1 = open("text1.txt", O_RDONLY);
+// 	fd2 = open("text2.txt", O_RDONLY);
+// 	fd3 = open("text3.txt", O_RDONLY);
 // 	while(str1 || str2)
 // 	{
 // 		str1 = get_next_line(fd1);
@@ -171,6 +175,12 @@ char	*build_next_line(t_Data **data, char *tmp, int bytes_read)
 // 		{
 // 			write(1, "fd2: ", 5);
 // 			write(1, &*str2, ft_strlen(str2));
+// 		}
+// 		str3 = get_next_line(fd3);
+// 		if (str3)
+// 		{
+// 			write(1, "fd3: ", 5);
+// 			write(1, &*str3, ft_strlen(str3));
 // 		}
 // 	}
 // 	return(0);

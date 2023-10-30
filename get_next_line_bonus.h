@@ -6,14 +6,14 @@
 /*   By: dsylvain <dsylvain@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 04:58:59 by dsylvain          #+#    #+#             */
-/*   Updated: 2023/10/30 07:28:21 by dsylvain         ###   ########.fr       */
+/*   Updated: 2023/10/30 09:55:21 by dsylvain         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_BONUS_H
 # define GET_NEXT_LINE_BONUS_H
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 50
+#  define BUFFER_SIZE 42
 # endif
 
 # include <unistd.h>
